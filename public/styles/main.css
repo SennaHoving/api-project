@@ -8,6 +8,7 @@
     --color-accent: #2B4BEE; 
     --color-border: #E2E4E9;
     --color-secondary: #131720; 
+    --color-shade: #676F7E; 
 
     --font-s: 0.875em; 
     --font-m: 1em; 
@@ -23,6 +24,76 @@ body {
     background-color: var(--color-background); 
 }
 
+
+body:has(div.intro) {
+    display: flex;
+    flex-direction: column; 
+    gap: 1em;
+
+    align-items: start;
+}
+
+body header {
+    height: 3em; 
+    width: 100%; 
+
+    background-color: var(--color-primary); 
+    border-bottom: 1px solid var(--color-border); 
+
+    position: sticky; 
+    top: 0; 
+
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+body header > a {
+    margin-left: 1em; 
+}
+
+body header > div {
+    margin-right: 1em; 
+}
+
+.intro {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+
+    width: 50vw; 
+    margin: 0 auto; 
+}
+
+.intro h1 {
+    margin: 0; 
+    width: 100%; 
+    font-size: 1.4em;
+}
+
+.intro p {
+    margin: 0; 
+    color: var(--color-shade); 
+    font-size: var(--font-m); 
+}
+
+.search {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+
+    width: 50vw; 
+    margin: 0 auto; 
+}
+
+.search input {
+    border-radius: 0.5em; 
+    border: 1px solid var(--color-border); 
+
+    padding: 0.5em; 
+}
+
 .exercises {
     width: 100%; 
 
@@ -31,7 +102,7 @@ body {
 }
 
 .exercises ul {
-    width: 60vw; 
+    width: 50vw; 
     padding: 0; 
     
     display: grid; 
@@ -41,20 +112,151 @@ body {
     list-style: none;
 }
 
-.exercises ul li {
+.exercises ul a {
     background-color: var(--color-primary);
     padding: 1em 0; 
     border-radius: 0.5em; 
-    border-color: 1px solid var(--color-border); 
+    border: 1px solid var(--color-border);
 
     width: 100%; 
+
+    display: flex; 
+    flex-direction: row; 
+    gap: 1em; 
+    align-items: center;
+
+    text-decoration: none;
+    color: #000;
+
+    &:hover {
+        border-color: var(--color-accent); 
+    }
 }
 
-.exercises ul li p {
-    margin: 0; 
+.exercises ul img {
+    height: 3em; 
+    aspect-ratio: 1/1 ;
+
+    background-color: var(--color-primary-shade);
+    border-radius: 0.5em;
+
+    object-fit: contain; 
+
+    margin: 0 1em; 
+}
+
+.exercises ul div {
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.2em; 
+}
+
+.exercises ul p {
+    margin: 0;
+    font-size: var(--font-s);  
 
     &:last-of-type {
-        color: var(--color-secondary); 
-        font-size: var(--font-s);
+        color: var(--color-shade); 
+        font-size: 0.75em;
     }
+}
+
+.details {
+    width: 50vw; 
+    display: flex;
+    flex-direction: column; 
+    gap: 1em;
+    justify-self: center;
+    margin: 0 auto; 
+
+    margin-top: 1em;
+}
+
+.details > a {
+    color: var(--color-secondary); 
+    text-decoration: none;
+
+    padding: 0.3em 0.6em; 
+    border-radius: 0.5em; 
+
+    width: min-content; 
+    white-space: nowrap;
+    
+    &:hover {
+        background-color: var(--color-primary-shade);   
+    }
+}
+
+.details > div:first-of-type {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: 1em; 
+}
+
+.details > div img {
+    background-color: var(--color-primary-shade);
+    border-radius: 0.5em;
+    aspect-ratio: 1/1;
+    height: 6em; 
+}
+
+.details > div div {
+    gap: 0.2em;
+    display: flex;
+    flex-direction: column; 
+}
+
+.details > div h1 {
+    font-size: 1.4em; 
+    margin: 0; 
+}
+
+.details > div p {
+    font-size: var(--font-m); 
+    color: var(--color-shade);
+    margin: 0;  
+}
+
+.details > div:nth-of-type(2) {
+    display: flex;
+    flex-direction: row; 
+    gap: 1em; 
+    justify-content: space-between;
+}
+
+.details > div:nth-of-type(2) div {
+    flex: 1; 
+    display: flex;
+    flex-direction: column; 
+    gap: 0.5em; 
+    align-items: center;
+
+    background-color: var(--color-primary); 
+    border: 1px solid var(--color-border); 
+    border-radius: 1em; 
+    padding: 1em; 
+}
+
+.details > div:nth-of-type(2) div p:first-child {
+    color: #000; 
+}
+
+.details > div:last-of-type {
+    background-color: var(--color-primary); 
+    border: 1px solid var(--color-border); 
+
+    display: flex;
+    flex-direction: column; 
+    gap: 1em;
+    padding: 2em; 
+    border-radius: 1em; 
+}
+
+.details > div:last-of-type h2 {
+    margin: 0; 
+}
+
+.details > div:last-of-type p {
+    line-height: 1.5em;
 }
