@@ -1,0 +1,50 @@
+---
+const fetchExercises = await fetch("https://wger.de/api/v2/exerciseinfo/"); 
+
+const responseExercises = await fetchExercises.json();
+const exercises = responseExercises.results;
+
+// Images 
+const fetchImages = await fetch("https://wger.de/api/v2/exerciseimage/?format=json&limit=999");
+
+const responseImages = await fetchImages.json();
+const images = responseImages.results;  
+
+console.log("First exercise:", exercises[0]?.id, exercises[0]?.images);
+console.log("First image object:", images[0]);
+console.log("Total images loaded:", images.length);
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+
+		<link rel="stylesheet" href="../../public/styles/main.css">
+	</head>
+	<body>
+		<a href="./index.html">Back</a>
+        <div class="exercises">
+            <ul>
+                {exercises.map((exercise) => {
+                    const exerciseImages = images.filter(img => img.exercise === exercise.id);
+                    const mainImage = exerciseImages.find(img => img.is_main) ?? exerciseImages[0];
+                    return (
+                    <li>
+                        <p>{exercise.translations[0]?.name}</p>
+                        <p>{exercise.muscles[0]?.name}</p>
+                        {mainImage 
+                            ? <img src={mainImage.image} alt={exercise.translations[0]?.name ?? ""} /> : <p>No image</p>  
+                        }
+                    </li>
+                    );
+                })}
+            </ul>
+        </div>
+		<script src="../../public/scripts/main.js"></script>
+	</body>
+</html>

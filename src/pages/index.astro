@@ -1,0 +1,24 @@
+---
+const fetchExercises = await fetch("https://wger.de/api/v2/exerciseinfo/"); 
+
+const responseExercises = await fetchExercises.json();
+const exercises = responseExercises.results;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+
+		<link rel="stylesheet" href="../../public/styles/main.css">
+	</head>
+	<body>
+		<h1>Astro</h1>
+		<a href="./exercises.html">Exercises</a>
+		<script src="../../public/scripts/main.js"></script>
+	</body>
+</html>
