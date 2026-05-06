@@ -260,3 +260,84 @@ body header > div {
 .details > div:last-of-type p {
     line-height: 1.5em;
 }
+
+/* Create workout */ 
+.create {
+    display: flex;
+    flex-direction: column; 
+    gap: 0.5em; 
+
+    width: 50vw; 
+    margin: 2em auto 2em auto; 
+}
+
+.create h2 {
+    font-size: 1.4em; 
+    margin: 0; 
+}
+
+.create p {
+    color: var(--color-secondary); 
+    font-size: var(--font-l); 
+
+    margin: 0; 
+}
+
+.workout {
+    width: 50vw; 
+    margin: 0 auto; 
+    display: grid; 
+    gap: 1em;
+    grid-template-columns: 4fr 7fr; 
+}
+
+.workout > div:nth-of-type(1) {
+    grid-column: 1 / 2;
+
+    background-color: var(--color-primary); 
+    border: 1px solid var(--color-border); 
+    padding: 1em;
+    border-radius: 1em; 
+}
+
+.workout > div:nth-of-type(2) {
+    grid-column: 2 / 3;
+    display: flex;
+    flex-direction: column; 
+    gap: 1em; 
+}
+
+.workout > div:nth-of-type(2) div {
+    background-color: var(--color-primary); 
+    border: 1px solid var(--color-border); 
+    padding: 1em;
+    border-radius: 1em; 
+}
+
+.workout ul {
+    list-style: none; 
+    display: flex;
+    flex-direction: column; 
+    gap: 0.5em; 
+    padding: 0; 
+
+    max-height: 75vh; 
+    overflow-y: scroll; 
+}
+
+.workout ul li {
+    border: 1px solid var(--color-border); 
+    padding: 1em;
+    border-radius: 1em; 
+}
+
+.workout div:nth-of-type(2) .field {
+    overflow: hidden; 
+}
+
+.workout div:nth-of-type(2) .field p {
+    border: 1px dashed var(--color-border); 
+    width: 100%; 
+    height: 10em;
+    border-radius: 1em; 
+}

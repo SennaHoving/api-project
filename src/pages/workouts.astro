@@ -1,0 +1,71 @@
+	---
+	const [ExerciseRes, MusclesRes, ExerciseTranslateRes] = await Promise.all([
+		fetch("https://wger.de/api/v2/exercise/?limit=40"), 
+		fetch("https://wger.de/api/v2/muscle/?limit=40"), 
+		fetch("https://wger.de/api/v2/exercise-translation/?limit=40")
+	]);
+
+	const exercisesData = await ExerciseRes.json();
+	const exercises = exercisesData.results;
+
+	const muscleData = await MusclesRes.json(); 
+	const muscles = muscleData.results;
+
+	const exerciseTransData = await ExerciseTranslateRes.json(); 
+	const exerciseTranslate = exerciseTransData.results;
+	---
+
+	<html lang="en">
+		<head>
+			<meta charset="utf-8" />
+			<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+			<link rel="icon" href="/favicon.ico" />
+			<meta name="viewport" content="width=device-width" />
+			<meta name="generator" content={Astro.generator} />
+			<title>API</title>
+
+			<link rel="stylesheet" href="../../public/styles/main.css">
+		</head>
+		<body>
+            <header>
+                <a href="./index.html">Home</a>
+                <div>
+                    <a href="./workouts.html">Create Workout</a>
+                    <a href="./exercises.html">Exercises</a>
+                </div>
+            </header>
+
+            <div class="create">
+                <h2>Create workout</h2>
+                <p>Build your perfect workout by dragging exercises into your routine.</p>
+            </div>
+
+            <div class="workout">
+                <div>
+                    <h2>Exercise Library</h2>
+                    <div> 
+                        <ul class="field">
+                            {exerciseTranslate.map((exercise) => (
+                                <li>{exercise.name}</li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <input type="text" placeholder="Title workout">
+                        <input type="text" placeholder="Description">
+                    </div>
+
+                    <div>
+                        <ul class="field">
+                            <p>Drop here to add exercise</p>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+			<script src="../../public/scripts/main.js"></script>
+		</body>
+	</html>
