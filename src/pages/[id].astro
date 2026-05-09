@@ -19,26 +19,26 @@ const { exercise } = Astro.props;
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
-        <title>{exercise.translations[0]?.name}</title>
-
-        <link rel="stylesheet" href="../../public/styles/main.css">
+        <title>{exercise.translations?.[0]?.name ?? "Exercise details"}</title>
+        
+        <link rel="stylesheet" href="/styles/main.css">
     </head>
     <body>
         <header>
-            <a href="./index.html">Home</a>
+            <a href="/">Home</a>
             <div>
-                <a href="./workouts.html">Create Workout</a>
-                <a href="./exercises.html">Exercises</a>
+                <a href="/workouts">Create Workout</a>
+                <a href="/exercises">Exercises</a>
             </div>
         </header>
 
         <div class="details">
             <a href="/exercises"><- Back</a>
             <div>
-                <img src={exercise.muscles[0]?.image_url_main} alt="" />
+                <img src={exercise.muscles?.[0]?.image_url_main} alt="" />
                 <div>
-                    <h1>{exercise.translations[0]?.name}</h1>   
-                    <p>{exercise.category.name}</p>
+                    <h1>{exercise.translations?.[0]?.name ?? "Unnamed"}</h1>   
+                    <p>{exercise.category?.name ?? "Unknown category"}</p>
                     
                 </div>
             </div>
@@ -46,21 +46,21 @@ const { exercise } = Astro.props;
             <div>
                 <div>
                     <p>Category</p>
-                    <p>{exercise.category.name}</p>
+                    <p>{exercise.category?.name ?? "Unknown category"}</p>
                 </div>
                 <div>
                     <p>Primary muscle</p>
-                    <p>{exercise.muscles[0]?.name}</p>
+                    <p>{exercise.muscles?.[0]?.name ?? "Unknown"}</p>
                 </div>
                 <div>
                     <p>Equipment</p>    
-                    <p>{exercise.equipment[0].name}</p>
+                    <p>{exercise.equipment?.[0]?.name ?? "No equipment"}</p>
                 </div>
             </div>
 
             <div>
                 <h2>Description</h2>
-                <p>{exercise.translations[0]?.description_source}</p>
+                <p>{exercise.translations?.[0]?.description_source ?? ""}</p>
             </div>
         </div>
 

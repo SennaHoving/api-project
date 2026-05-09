@@ -24,14 +24,14 @@
 			<meta name="generator" content={Astro.generator} />
 			<title>API</title>
 
-			<link rel="stylesheet" href="../../public/styles/main.css">
+			<link rel="stylesheet" href="/styles/main.css">
 		</head>
 		<body>
             <header>
-                <a href="./index.html">Home</a>
+                <a href="/">Home</a>
                 <div>
-                    <a href="./workouts.html">Create Workout</a>
-                    <a href="./exercises.html">Exercises</a>
+                    <a href="/workouts">Create Workout</a>
+                    <a href="/exercises">Exercises</a>
                 </div>
             </header>
 
@@ -66,6 +66,8 @@
                 </div>
             </div>
 
-			<script src="../../public/scripts/main.js"></script>
+            <script>
+                import "../scripts/main.js";
+            </script>
 		</body>
 	</html>
