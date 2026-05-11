@@ -1,73 +1,91 @@
-	---
-	const [ExerciseRes, MusclesRes, ExerciseTranslateRes] = await Promise.all([
-		fetch("https://wger.de/api/v2/exercise/?limit=40"), 
-		fetch("https://wger.de/api/v2/muscle/?limit=40"), 
-		fetch("https://wger.de/api/v2/exercise-translation/?limit=40")
-	]);
+---
+const fetchExercises = await fetch("https://wger.de/api/v2/exerciseinfo/"); 
 
-	const exercisesData = await ExerciseRes.json();
-	const exercises = exercisesData.results;
+const responseExercises = await fetchExercises.json();
 
-	const muscleData = await MusclesRes.json(); 
-	const muscles = muscleData.results;
+//Structure exercises data
+const exercises = responseExercises.results.map((exercise) => ({
+	id: exercise.id,
+	name: exercise.translations?.[0]?.name ?? "Unnamed",
+	category: exercise.category?.name ?? "Unknown",
+	muscles: exercise.muscles?.map(m => m.name ?? m) ?? [],
+	equipment: exercise.equipment?.map(e => e.name ?? e) ?? [],
+	// image: exercise.images?.[0]?.image ?? null,
+	image: exercise.muscles?.map(m => m.image_url_main ?? m) ?? [],
+}));
+---
 
-	const exerciseTransData = await ExerciseTranslateRes.json(); 
-	const exerciseTranslate = exerciseTransData.results;
-	---
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>API</title>
 
-	<html lang="en">
-		<head>
-			<meta charset="utf-8" />
-			<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-			<link rel="icon" href="/favicon.ico" />
-			<meta name="viewport" content="width=device-width" />
-			<meta name="generator" content={Astro.generator} />
-			<title>API</title>
+        <link rel="stylesheet" href="/styles/main.css">
+    </head>
+    <body>
+        <header>
+            <a href="/">Home</a>
+            <div>
+                <a href="/workouts">Create Workout</a>
+                <a href="/exercises">Exercises</a>
+            </div>
+        </header>
 
-			<link rel="stylesheet" href="/styles/main.css">
-		</head>
-		<body>
-            <header>
-                <a href="/">Home</a>
-                <div>
-                    <a href="/workouts">Create Workout</a>
-                    <a href="/exercises">Exercises</a>
+        <div class="create">
+            <h2>Create workout</h2>
+            <p>Build your perfect workout by dragging exercises into your routine.</p>
+        </div>
+
+        <div class="workout">
+            <div>
+                <h2>Exercise Library</h2>
+                <input type="text" id="search" placeholder="Search exercises..."/>
+                <div> 
+                    <ul class="field" id="list">
+                        {exercises.sort((a, b) => a.id - b.id).map((exercise) => (
+                            <li data-id={exercise.id} data-name={exercise.name.toLowerCase()}>
+                                <p>{exercise.name}</p>
+                                <div>
+                                    <div>
+                                        <p>sets</p>
+                                        <button>-</button>
+                                        <input type="text" value="0"/>
+                                        <button>+</button>
+                                    </div>
+                                    <div>
+                                        <p>weight</p>
+                                        <button>-</button>
+                                        <input type="text" value="0"/>
+                                        <button>+</button>
+                                    </div>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-            </header>
-
-            <div class="create">
-                <h2>Create workout</h2>
-                <p>Build your perfect workout by dragging exercises into your routine.</p>
             </div>
 
-            <div class="workout">
-                <div>
-                    <h2>Exercise Library</h2>
-                    <div> 
-                        <ul class="field">
-                            {exerciseTranslate.map((exercise) => (
-                                <li>{exercise.name}</li>
-                            ))}
-                        </ul>
+            <div>
+                <h2>Workout exercises</h2>
+
+                <ul class="field">
+                    <div>
+                        <p>Drop here to add exercise</p>
                     </div>
-                </div>
+                </ul>
 
                 <div>
-                    <div>
-                        <input type="text" placeholder="Title workout">
-                        <input type="text" placeholder="Description">
-                    </div>
-
-                    <div>
-                        <ul class="field">
-                            <p>Drop here to add exercise</p>
-                        </ul>
-                    </div>
+                    <button>Save Workout</button>
                 </div>
             </div>
+        </div>
 
-            <script>
-                import "../scripts/main.js";
-            </script>
-		</body>
-	</html>
+        <script>
+            import "../scripts/main.js";
+        </script>
+    </body>
+</html>

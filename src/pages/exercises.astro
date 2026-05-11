@@ -1,8 +1,10 @@
 ---
-const fetchExercises = await fetch("https://wger.de/api/v2/exerciseinfo/"); 
+// const fetchExercises = await fetch("https://wger.de/api/v2/exerciseinfo/"); 
 
-const responseExercises = await fetchExercises.json();
-const exercises = responseExercises.results;
+// const responseExercises = await fetchExercises.json();
+// const exercises = responseExercises.results;
+
+let exercises = []; 
 ---
 
 <html lang="en">
@@ -32,23 +34,33 @@ const exercises = responseExercises.results;
             <input type="text" placeholder="Search exercises...">
         </div>
         <div class="exercises">
-            <ul>
-                {exercises.map((exercise) => {
-                    return (  
-                        <a href={`/${exercise.id}`}>
-                            <img src={exercise.muscles[0]?.image_url_main} alt="">
-                            <div>
-                                <p>{exercise.translations[0]?.name}</p>
-                                {/* <p>{exercise.muscles[0]?.name}</p> */}
-                                <p>{exercise.category.name}</p>
-                            </div>
-                        </a>
-                    )
-                })}
-            </ul>
+            <ul id="exercise-list"></ul>
         </div>
-		<script>
-            import "../scripts/main.js";
+
+        <script type="module">
+            const cached = localStorage.getItem("exercises");
+
+            console.log(cached); 
+
+            if (!cached) {
+                document.getElementById("exercise-list").innerHTML =
+                    "<p>No data found. Go home first.</p>";
+            } else {
+                const exercises = JSON.parse(cached);
+                const listEl = document.getElementById("exercise-list");
+
+                listEl.innerHTML = exercises
+                    .map(
+                        (ex) => `
+                            <img src=${ex.image} alt="">
+                            <a href="/exercise/${ex.id}">
+                                <p>${ex.name}</p>
+                                <p>${ex.category}</p>
+                            </a>
+                        `
+                    )
+                    .join("");
+            }
         </script>
 	</body>
 </html>

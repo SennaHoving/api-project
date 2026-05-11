@@ -1,8 +1,20 @@
 ---
-// const fetchExercises = await fetch("https://wger.de/api/v2/exerciseinfo/"); 
+const fetchExercises = await fetch("https://wger.de/api/v2/exerciseinfo/"); 
 
-// const responseExercises = await fetchExercises.json();
-// const exercises = responseExercises.results;
+const responseExercises = await fetchExercises.json();
+
+//Structure exercises data
+const exercises = responseExercises.results.map((exercise) => ({
+	id: exercise.id,
+	name: exercise.translations?.[0]?.name ?? "Unnamed",
+	category: exercise.category?.name ?? "Unknown",
+	muscles: exercise.muscles?.map(m => m.name ?? m) ?? [],
+	equipment: exercise.equipment?.map(e => e.name ?? e) ?? [],
+	// image: exercise.images?.[0]?.image ?? null,
+	image: exercise.muscles?.map(m => m.image_url_main ?? m) ?? [],
+}));
+
+console.log(exercises); 
 ---
 
 <html lang="en">
@@ -12,7 +24,7 @@
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>FitTrack</title>
 
 		<link rel="stylesheet" href="/styles/main.css">
 		<link rel="stylesheet" href="/styles/index.css">
@@ -29,7 +41,7 @@
 		<section>
 			<div>
 				<h1>Your fitness journey</h1>
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa unde voluptate, dignissimos labore ad, sequi omnis possimus deleniti itaque quidem reprehenderit inventore fugiat sapiente voluptates laboriosam odio neque deserunt autem!</p>
+				<p>Track your workouts, stay consistent, and build routines that actually work for you. Create custom workouts that fit your goals and watch your progress grow with every rep and every session.</p>
 				<button>+ Create workout</button>
 			</div>
 		</section>
@@ -50,5 +62,11 @@
 
 			</div>
 		</section>
+
+		<script type="module" define:vars={{ exercises }}>
+			localStorage.setItem("exercises", JSON.stringify(exercises));
+
+			console.log(JSON.parse(localStorage.getItem("exercises")));
+		</script>
 	</body>
 </html>
