@@ -1,20 +1,20 @@
 ---
-const fetchExercises = await fetch("https://wger.de/api/v2/exerciseinfo/"); 
+// const fetchExercises = await fetch("https://wger.de/api/v2/exerciseinfo/"); 
 
-const responseExercises = await fetchExercises.json();
+// const responseExercises = await fetchExercises.json();
 
-//Structure exercises data
-const exercises = responseExercises.results.map((exercise) => ({
-	id: exercise.id,
-	name: exercise.translations?.[0]?.name ?? "Unnamed",
-	category: exercise.category?.name ?? "Unknown",
-	muscles: exercise.muscles?.map(m => m.name ?? m) ?? [],
-	equipment: exercise.equipment?.map(e => e.name ?? e) ?? [],
-	// image: exercise.images?.[0]?.image ?? null,
-	image: exercise.muscles?.map(m => m.image_url_main ?? m) ?? [],
-}));
+// //Structure exercises data
+// const exercises = responseExercises.results.map((exercise) => ({
+// 	id: exercise.id,
+// 	name: exercise.translations?.[0]?.name ?? "Unnamed",
+// 	category: exercise.category?.name ?? "Unknown",
+// 	muscles: exercise.muscles?.map(m => m.name ?? m) ?? [],
+// 	equipment: exercise.equipment?.map(e => e.name ?? e) ?? [],
+// 	// image: exercise.images?.[0]?.image ?? null,
+// 	image: exercise.muscles?.map(m => m.image_url_main ?? m) ?? [],
+// }));
 
-console.log(exercises); 
+// console.log(exercises); 
 ---
 
 <html lang="en">
@@ -49,24 +49,41 @@ console.log(exercises);
 		<section>	
 			<div>
 				<p>Workouts</p>
-				<p>2</p>
+				<p id="workout_count">0</p>
 			</div>
 		</section>
 
 		<section>
 			<div>
 				<h2>Your workouts</h2>
-				<a href="/workouts">Create new</a>
+				<a href="/workouts">+ Create new</a>
 			</div>
-			<div>
+			<div id="workouts_container">
 
 			</div>
 		</section>
+		<script>
+			const workouts = JSON.parse(localStorage.getItem("workouts") ?? "[]");
+			const container = document.getElementById("workouts_container");
 
-		<script type="module" define:vars={{ exercises }}>
-			localStorage.setItem("exercises", JSON.stringify(exercises));
+			document.getElementById("workout_count").textContent = workouts.length;
 
-			console.log(JSON.parse(localStorage.getItem("exercises")));
+			container.innerHTML = workouts.map(w => `
+				<div>
+				<h3>${w.name}</h3>
+				<ul>
+					${w.exercises.map(e => `<li>${e.name} — ${e.sets} sets · ${e.weight} kg</li>`).join("")}
+				</ul>
+				</div>
+			`).join("") || "<p>No workouts saved yet.</p>";
 		</script>
 	</body>
 </html>
+
+<!-- sources:
+https://fitech101.aalto.fi/fi/courses/designing-and-building-scalable-web-applications/part-4/6-astro-routes-and-rendering
+https://www.gideonmaina.me/blog/dynamic-routes-with-server-rendering-in-astro
+https://render.com/docs/deploy-astro
+https://docs.astro.build/en/guides/data-fetching/
+https://wslisam.medium.com/mastering-localstorage-the-unsung-hero-of-client-side-storage-1b318851ea96
+-->

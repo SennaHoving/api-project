@@ -17,8 +17,6 @@ export async function getStaticPaths() {
 }
 
 const { exercise } = Astro.props;
-
-console.log(exercise.id, exercise.images);
 ---
 
 <html lang="en">
@@ -74,16 +72,9 @@ console.log(exercise.id, exercise.images);
                 <p>{exercise.translations?.[0]?.description_source ?? ""}</p>
             </div>
         </div>
-
-        <!-- <h1>{exercise.translations[0]?.name}</h1>
-
-        <img src={exercise.muscles[0]?.image_url_main} alt="" />
-
-        <p><strong>Muscle:</strong> {exercise.muscles[0]?.name}</p>
-
-        <div>
-        <h3>Description</h3>
-        <p set:html={exercise.translations[0]?.description}></p>
-        </div> -->
     </body>
 </html>
+
+<!-- Sources: 
+https://fitech101.aalto.fi/fi/courses/designing-and-building-scalable-web-applications/part-4/6-astro-routes-and-rendering
+https://www.gideonmaina.me/blog/dynamic-routes-with-server-rendering-in-astro -->

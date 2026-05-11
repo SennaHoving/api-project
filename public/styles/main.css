@@ -57,6 +57,30 @@ body header > div {
     margin-right: 1em; 
 }
 
+body header a {
+    border-radius: 0.5em;
+    padding: 0.4em 1em;
+    color: var(--color-secondary);
+    text-decoration: none;
+
+    /* background-color: var(--color-accent); */
+}
+
+body:has(section) header > a {
+    background-color: var(--color-accent);
+    color: #fff; 
+}
+
+body:has(.exercises) header div a:last-child {
+    background-color: var(--color-accent);
+    color: #fff; 
+}
+
+body:has(.workout) header div a:first-child {
+    background-color: var(--color-accent);
+    color: #fff; 
+}
+
 .intro {
     display: flex;
     flex-direction: column;
@@ -398,32 +422,60 @@ body header > div {
     font-size: 1em; 
 }
 
-.workout div:nth-of-type(2) .field:not(:has(li)) > div {
+/* .workout div:nth-of-type(2) .field:not(:has(li)) > .empty {
     display: flex;
-}
+} */
 
 .workout div:nth-of-type(2) .field {
     overflow: hidden; 
     margin-bottom: 1em;
 }
 
-.workout div:nth-of-type(2) .field > div {
-    display: none;
+.workout div:nth-of-type(2) .field {
+    min-height: 3em;
+}
 
+.workout div:nth-of-type(2) .field:not(:has(li))::after {
+    content: "Drop here to add exercise";
+    color: var(--color-shade);
+    font-size: 1em;
+    display: block;
+    text-align: center;
+    padding: 1em;
     border: 1px dashed var(--color-border); 
     width: 100%; 
     height: 10em;
     border-radius: 1em; 
-
-    justify-content: center;
-    align-items: center;
-}
-
-.workout div:nth-of-type(2) .field > div p {
-    color: var(--color-shade);
 }
 
 .workout div:nth-of-type(2) .field li {
     font-size: var(--font-m);
 
+}
+
+#workouts_container {
+    display: flex; 
+    flex-direction: column;
+    gap: 2em;
+}
+
+#workouts_container div {
+    display: flex; 
+    flex-direction: column;
+    gap: 1em; 
+    align-items: start;
+
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 1em;
+    padding: 1em;
+}
+
+#workouts_container div h3 {
+    margin: 0; 
+    font-size: 1.2em;
+}
+
+#workouts_container div ul {
+    margin: 0; 
 }

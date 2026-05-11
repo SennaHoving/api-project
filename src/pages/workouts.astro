@@ -9,9 +9,6 @@ const exercises = responseExercises.results.map((exercise) => ({
 	name: exercise.translations?.[0]?.name ?? "Unnamed",
 	category: exercise.category?.name ?? "Unknown",
 	muscles: exercise.muscles?.map(m => m.name ?? m) ?? [],
-	equipment: exercise.equipment?.map(e => e.name ?? e) ?? [],
-	// image: exercise.images?.[0]?.image ?? null,
-	image: exercise.images?.[0]?.image ?? null,
 }));
 ---
 
@@ -73,20 +70,19 @@ const exercises = responseExercises.results.map((exercise) => ({
             <div>
                 <h2>Workout exercises</h2>
 
-                <ul class="field">
-                    <div>
-                        <p>Drop here to add exercise</p>
-                    </div>
-                </ul>
+                <ul class="field" id="workoutList"></ul>
 
                 <div>
-                    <button>Save Workout</button>
+                    <button id="saveWorkout">Save Workout</button>
                 </div>
             </div>
         </div>
 
         <script>
             import "../scripts/main.js";
+        </script>
+        <script>
+            import "../scripts/store.js";
         </script>
     </body>
 </html>
