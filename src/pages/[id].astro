@@ -5,11 +5,20 @@ export async function getStaticPaths() {
 
   return data.results.map((exercise) => ({
     params: { id: exercise.id.toString() },
-    props: { exercise },
+    props: {
+      exercise: {
+        ...exercise,
+        image: exercise.images?.[0]?.image
+          ? `https://wger.de${exercise.images[0].image}`
+          : null,
+      },
+    },
   }));
 }
 
 const { exercise } = Astro.props;
+
+console.log(exercise.id, exercise.images);
 ---
 
 <html lang="en">
@@ -35,7 +44,9 @@ const { exercise } = Astro.props;
         <div class="details">
             <a href="/exercises"><- Back</a>
             <div>
-                <img src={exercise.muscles?.[0]?.image_url_main} alt="" />
+                {exercise.image && (
+                    <img src={exercise.image} alt={exercise.translations?.[0]?.name ?? "Exercise"} />
+                )}
                 <div>
                     <h1>{exercise.translations?.[0]?.name ?? "Unnamed"}</h1>   
                     <p>{exercise.category?.name ?? "Unknown category"}</p>

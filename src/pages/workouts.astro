@@ -11,7 +11,7 @@ const exercises = responseExercises.results.map((exercise) => ({
 	muscles: exercise.muscles?.map(m => m.name ?? m) ?? [],
 	equipment: exercise.equipment?.map(e => e.name ?? e) ?? [],
 	// image: exercise.images?.[0]?.image ?? null,
-	image: exercise.muscles?.map(m => m.image_url_main ?? m) ?? [],
+	image: exercise.images?.[0]?.image ?? null,
 }));
 ---
 
@@ -50,17 +50,18 @@ const exercises = responseExercises.results.map((exercise) => ({
                             <li data-id={exercise.id} data-name={exercise.name.toLowerCase()}>
                                 <p>{exercise.name}</p>
                                 <div>
-                                    <div>
+                                    <div class="counter">
                                         <p>sets</p>
-                                        <button>-</button>
-                                        <input type="text" value="0"/>
-                                        <button>+</button>
+                                        <button class="decrease">-</button>
+                                        <input type="text" value="0" class="value"/>
+                                        <button class="increase">+</button>
                                     </div>
-                                    <div>
+
+                                    <div class="counter">
                                         <p>weight</p>
-                                        <button>-</button>
-                                        <input type="text" value="0"/>
-                                        <button>+</button>
+                                        <button class="decrease">-</button>
+                                        <input type="text" value="0" class="value"/>
+                                        <button class="increase">+</button>
                                     </div>
                                 </div>
                             </li>

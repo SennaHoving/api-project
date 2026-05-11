@@ -53,3 +53,21 @@ function sortExerciseList() {
         })
         .forEach(item => list.appendChild(item));
 }
+
+// "-"  "+" button
+document.addEventListener("click", (e) => {
+    const btn = e.target;
+
+    const counter = btn.closest(".counter");
+    const input = counter.querySelector(".value");
+
+    let current = Number(input.value) || 0;
+
+    if (btn.classList.contains("increase")) {
+        current++;
+    } else {
+        current = Math.max(0, current - 1);
+    }
+
+    input.value = current;
+});
